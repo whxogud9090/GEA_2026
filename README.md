@@ -20,4 +20,10 @@
 - 시작과 도착을 포함한 13개 발판과 12개 점프 구간
 - 계단, 벽, 경사 지형 및 Material 적용
 
-이동 속도는 5, 점프 힘은 5, 중력은 -20입니다.
+이동 속도는 5, 점프 힘은 8, 중력은 -20입니다.
+
+## 맵 수정
+
+Play를 종료한 뒤 Hierarchy에서 `JumpMap`을 펼치면 발판, 계단, 벽, 경사를 각각 선택할 수 있습니다. Transform의 Position, Rotation, Scale로 위치와 크기를 수정하고 씬을 저장합니다.
+
+점프 높이는 `Player`의 Player Controller 컴포넌트에 있는 Jump Power로 조절합니다.
