@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Lesson02/Scenes/Lesson02JumpMap.unity
-    guid: 342f33c5af02fde4689b5743019c3d3d
+    path: Assets/Lesson03/Scenes/Lesson03Arena.unity
+    guid: 6a20d5d3daf4d4d4b82ba46a25600753
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

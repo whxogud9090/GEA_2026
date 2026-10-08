@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
         if (controller.isGrounded && verticalVelocity < 0f)
         {
             verticalVelocity = -2f;
