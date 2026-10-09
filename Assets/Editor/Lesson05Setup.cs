@@ -38,13 +38,13 @@ public static class Lesson05Setup
         var spawn=new GameObject("EnemySpawner"); spawn.transform.SetParent(combat.transform);
         var spawner=spawn.AddComponent<EnemySpawner>(); spawner.enemyPrefabs=new[]{melee,ranged};
         spawner.spawnPoints=points.Select((p,i)=>{ var t=new GameObject("SpawnPoint"+(i+1)).transform; t.SetParent(spawn.transform); p.y=ground; t.position=p; return t; }).ToArray();
-        var initial=new[]{new Vector3(5,ground,6),new Vector3(-5,ground,6),new Vector3(6,ground,0),new Vector3(-6,ground,0),new Vector3(5,ground,-6),new Vector3(-5,ground,-6)};
-        for(int i=0;i<initial.Length;i++) { var e=(GameObject)PrefabUtility.InstantiatePrefab(i<4?melee:ranged); e.transform.SetParent(combat.transform); e.transform.position=initial[i]; }
+        var initial=new[]{new Vector3(5,ground,6),new Vector3(-5,ground,6),new Vector3(6,ground,0),new Vector3(-6,ground,0),new Vector3(0,ground,6),new Vector3(5,ground,-6),new Vector3(-5,ground,-6)};
+        for(int i=0;i<initial.Length;i++) { var e=(GameObject)PrefabUtility.InstantiatePrefab(i<5?melee:ranged); e.transform.SetParent(combat.transform); e.transform.position=initial[i]; }
         EditorSceneManager.SaveScene(scene);
         EditorBuildSettings.scenes=new[]{new EditorBuildSettingsScene(scene.path,true)};
         AssetDatabase.SaveAssets();
-        if(UnityEngine.Object.FindObjectsByType<Health>(FindObjectsSortMode.None).Length!=7) throw new Exception("Expected player and six enemies");
-        Debug.Log("LESSON05_SETUP_OK: existing arena updated, 6 voxel enemies, health UI, projectiles, spawner.");
+        if(UnityEngine.Object.FindObjectsByType<Health>(FindObjectsSortMode.None).Length!=8) throw new Exception("Expected player and seven enemies");
+        Debug.Log("LESSON05_SETUP_OK: existing arena updated, 5 melee and 2 ranged voxel enemies, health UI, projectiles, spawner.");
     }
     static Material Material(string name,Color color)
     {
@@ -72,7 +72,13 @@ public static class Lesson05Setup
         visual.transform.localPosition=new Vector3(-bounds.center.x,-bounds.min.y,-bounds.center.z);
         bounds=renderers[0].bounds; foreach(var r in renderers) bounds.Encapsulate(r.bounds);
         var collider=g.AddComponent<BoxCollider>(); collider.center=bounds.center; collider.size=bounds.size;
-        foreach(var r in renderers) foreach(var m in r.sharedMaterials) if(m!=null && m.shader.name!="Universal Render Pipeline/Lit") { var color=m.color; m.shader=Shader.Find("Universal Render Pipeline/Lit"); m.color=color; EditorUtility.SetDirty(m); }
+        var palette=AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"/Models/"+model+"_palette.png");
+        if(palette==null) throw new Exception("Missing MagicaVoxel palette texture "+model);
+        string matPath=Root+"/Materials/"+model+".mat";
+        var modelMat=AssetDatabase.LoadAssetAtPath<Material>(matPath);
+        if(modelMat==null) { modelMat=new Material(Shader.Find("Universal Render Pipeline/Lit")); AssetDatabase.CreateAsset(modelMat,matPath); }
+        modelMat.SetTexture("_BaseMap",palette); modelMat.SetColor("_BaseColor",Color.white); EditorUtility.SetDirty(modelMat);
+        foreach(var r in renderers) r.sharedMaterials=Enumerable.Repeat(modelMat,r.sharedMaterials.Length).ToArray();
         if(ranged) { var s=g.AddComponent<EnemyShooter>(); s.bulletPrefab=bullet; var f=new GameObject("FirePoint").transform; f.SetParent(g.transform,false); f.localPosition=new Vector3(0,1,collider.size.z*.5f+.25f); s.firePoint=f; }
         else g.AddComponent<EnemyChaser>();
         var prefab=PrefabUtility.SaveAsPrefabAsset(g,Root+"/Prefabs/"+name+".prefab"); UnityEngine.Object.DestroyImmediate(g); return prefab;

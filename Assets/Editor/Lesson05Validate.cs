@@ -28,6 +28,7 @@ public static class Lesson05Validate
         var input=p.GetComponent<PlayerInput>();
         if(input.notificationBehavior!=PlayerNotifications.SendMessages || input.actions.FindAction("Player/Attack")==null) throw new Exception("Attack input configuration invalid");
         var enemies=GameObject.FindGameObjectsWithTag("Enemy");
+        if(enemies.Count(e=>e.GetComponent<EnemyChaser>()!=null)<5) throw new Exception("Expected at least five melee enemies");
         if(enemies.Length<5 || enemies.Any(e=>e.GetComponentsInChildren<Renderer>().Length==0 || e.GetComponent<Health>()==null)) throw new Exception("Enemy configuration invalid");
         if(enemies.Any(e=>e.GetComponentsInChildren<Collider>().Length!=1)) throw new Exception("Enemy collider must be on parent only");
         SessionState.SetBool("Lesson05Validate",true);
@@ -78,7 +79,7 @@ public static class Lesson05Validate
             }
             else if(stage==4 && elapsed>3.3f)
             {
-                if(GameObject.FindGameObjectsWithTag("Enemy").Length!=6) throw new Exception("3 second spawner failed");
+                if(GameObject.FindGameObjectsWithTag("Enemy").Length!=7) throw new Exception("3 second spawner failed");
                 UnityEngine.Object.FindFirstObjectByType<EnemySpawner>().enabled=false;
                 var chaser=UnityEngine.Object.FindObjectsByType<EnemyChaser>(FindObjectsSortMode.None)[0];
                 chaser.transform.position=player.transform.position+player.transform.right;
@@ -99,7 +100,7 @@ public static class Lesson05Validate
             {
                 if(player.currentHp>=baseline) throw new Exception("Ranged projectile attack failed");
                 player.TakeDamage(99); if(Time.timeScale!=0 || player.currentHp!=0) throw new Exception("Game over failed");
-                File.WriteAllText(Path.GetFullPath("../work/lesson05-validation.txt"),"PASS: 6 voxel enemies; parent colliders; real left-click Attack input; projectile damage; enemy death; bullet cleanup; player HP slider; 3-second spawner; melee attack; ranged projectile attack; game-over pause.\n");
+                File.WriteAllText(Path.GetFullPath("../work/lesson05-validation.txt"),"PASS: 5 melee and 2 ranged voxel enemies; parent colliders; real left-click Attack input; projectile damage; enemy death; bullet cleanup; player HP slider; 3-second spawner; melee attack; ranged projectile attack; game-over pause.\n");
                 Finish(0);
             }
             if(elapsed>8) throw new Exception("Validation timeout");
