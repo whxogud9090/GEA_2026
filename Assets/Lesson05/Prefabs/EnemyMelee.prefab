@@ -50,6 +50,10 @@ MonoBehaviour:
   maxHp: 3
   currentHp: 0
   hpSlider: {fileID: 0}
+  invincibleTime: 0
+  dropPrefab: {fileID: 791834432572176965, guid: 4286682c8ef930147835bee485482356, type: 3}
+  dropChance: 0.3
+  hitEffect: {fileID: 3389534898244426826, guid: 37e624a9a2014e6478e7db7d1457a8df, type: 3}
 --- !u!65 &3459551635997527255
 BoxCollider:
   m_ObjectHideFlags: 0
