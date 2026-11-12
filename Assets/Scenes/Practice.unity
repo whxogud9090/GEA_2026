@@ -224,6 +224,9 @@ GameObject:
   - component: {fileID: 1670751284}
   - component: {fileID: 1670751283}
   - component: {fileID: 1670751282}
+  - component: {fileID: 1670751289}
+  - component: {fileID: 1670751288}
+  - component: {fileID: 1670751287}
   m_Layer: 0
   m_Name: Tester
   m_TagString: Untagged
@@ -315,6 +318,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1670751287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670751281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde1f2020237dd24c80aa05c65d3f77e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSystem
+  expPerKill: 35000
+  killCount: 3
+--- !u!114 &1670751288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670751281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e27ad908115da3345861ce2c14ab290a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamagePractice
+  attack: 12
+  defense: 5
+  isCritical: 1
+  targetIsBoss: 1
+--- !u!114 &1670751289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670751281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe8146e335ad04745b1388c709865811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Lesson10
 --- !u!1 &1685058133
 GameObject:
   m_ObjectHideFlags: 0
